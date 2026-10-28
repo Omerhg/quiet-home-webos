@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+"""One-shot mute action. Runs as an ordinary developer app and exits immediately."""
+import json,os,struct,time
+from pathlib import Path
+report={'uid':os.getuid(),'groups':os.getgroups(),'time':time.time()}
+try:
+    event=lambda kind,code,value:struct.pack('llHHi',0,0,kind,code,value)
+    with open('/dev/input/event0','wb',buffering=0) as stream:
+        stream.write(event(1,113,1)+event(0,0,0)+event(1,113,0)+event(0,0,0))
+    report['muteKeySent']=True
+except Exception as error:
+    report['error']=str(error)
+try:
+    target=Path(__file__).with_name('last-run.json')
+    fd=os.open(target,os.O_WRONLY|os.O_CREAT|os.O_TRUNC,0o600)
+    with os.fdopen(fd,'w') as handle: handle.write(json.dumps(report,indent=2))
+except OSError:
+    pass

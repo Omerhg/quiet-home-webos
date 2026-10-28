@@ -1,0 +1,10 @@
+{
+  "domain": "quiet_home_lights",
+  "name": "Quiet Home Lights",
+  "version": "1.0.0",
+  "documentation": "https://www.home-assistant.io/integrations/light/",
+  "dependencies": ["http"],
+  "requirements": [],
+  "codeowners": [],
+  "iot_class": "local_push"
+}

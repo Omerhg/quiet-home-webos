@@ -1,0 +1,21 @@
+{
+  "id": "com.quiet.home",
+  "version": "0.9.0",
+  "vendor": "Personal",
+  "type": "web",
+  "main": "index.html",
+  "title": "Quiet Home",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "bgColor": "#08090d",
+  "iconColor": "#171922",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true,
+  "requiredACG": [
+    "application.launcher"
+  ],
+  "appCategory": [
+    "home"
+  ],
+  "appDescription": "Your favorite apps and inputs."
+}

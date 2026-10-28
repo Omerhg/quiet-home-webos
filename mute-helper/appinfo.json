@@ -1,0 +1,13 @@
+{
+  "id": "com.quiet.mute",
+  "version": "0.1.2",
+  "vendor": "Personal",
+  "type": "native",
+  "main": "mute-toggle",
+  "title": "Quiet Remote",
+  "icon": "icon.png",
+  "visible": false,
+  "noSplashOnLaunch": true,
+  "requiredACG": [],
+  "appDescription": "Toggle mute with a single native remote key event."
+}

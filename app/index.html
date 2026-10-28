@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>Quiet Home</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <main id="screen">
+    <div id="wallpapers" aria-hidden="true"></div>
+    <div class="wallpaper-shade" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true"></div>
+    <header class="header">
+      <h1 class="visually-hidden">Home</h1>
+      <span id="date"></span>
+      <time id="clock"></time>
+    </header>
+    <section class="apps-section" aria-labelledby="apps-heading">
+      <div class="section-heading"><h2 id="apps-heading">Your apps</h2><span id="arrange-hint" aria-live="polite"></span></div>
+      <div id="apps" class="apps-grid"></div>
+      <div id="empty-apps" hidden><p>Make yourself at home.</p><button class="nav secondary" id="choose-first">Choose your apps</button></div>
+    </section>
+    <section class="inputs-section" aria-labelledby="inputs-heading">
+      <div class="section-heading"><h2 id="inputs-heading">Inputs</h2></div>
+      <div id="inputs" class="inputs-grid"></div>
+    </section>
+    <footer id="home-tools">
+      <div class="utility-dock">
+        <div class="utility-side">
+        <button id="lg-home-tile" class="nav utility-action" aria-label="Open LG Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 9-8 9 8M5 9v12h5v-7h4v7h5V9"/></svg><span>LG Home</span></button>
+        <button id="edit-home" class="nav utility-action" aria-label="Open Settings"></button>
+        </div>
+        <button id="scene-button" class="nav utility-action" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z"/></svg><span id="scene-button-label"></span></button>
+        <div class="utility-side utility-right"><button id="controls-open" class="nav utility-action" aria-label="Open Home control center"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg><span>Controls</span></button><button id="lights-open" class="nav utility-action lighting-entry" aria-label="Open lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16c0-3-3-4-3-8a7 7 0 0 1 14 0c0 4-3 5-3 8M8 16h8M9 19h6M10 22h4"/></svg><span>Lights</span></button></div>
+      </div>
+    </footer>
+    <div id="scenery-overlay" aria-label="Scenery mode" hidden><span>Move the pointer or press a button to return Home</span></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="backdrop" hidden></div>
+    <section id="lights-dialog" role="dialog" aria-modal="true" aria-labelledby="lights-title" hidden>
+      <header class="lighting-heading"><div><h2 id="lights-title">Lights</h2><p>Set the mood.</p></div><div class="lighting-toolbar"><button id="lights-refresh" class="nav icon-button" aria-label="Refresh lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="lights-close" class="nav icon-button" aria-label="Close lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
+      <p id="lights-status" role="status" aria-live="polite">Connecting…</p>
+      <div id="lighting-rooms" class="lighting-rooms"></div>
+      <footer class="lighting-footer"><span>Use arrows to move · Left / right adjusts a slider</span><button id="lights-done" class="nav primary">Done</button></footer>
+    </section>
+    <section id="controls-dialog" role="dialog" aria-modal="true" aria-labelledby="controls-title" hidden>
+      <header class="lighting-heading"><div><h2 id="controls-title">Home controls</h2><p>A little more comfort.</p></div><div class="lighting-toolbar"><button id="controls-refresh" class="nav icon-button" aria-label="Refresh Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="controls-close" class="nav icon-button" aria-label="Close Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
+      <p id="controls-status" role="status" aria-live="polite">Connecting…</p>
+      <div id="control-devices" class="control-devices"></div>
+      <footer class="lighting-footer"><span>Use arrows to move · Left / right adjusts a slider</span><button id="controls-done" class="nav primary">Done</button></footer>
+    </section>
+    <section id="editor" role="dialog" aria-modal="true" aria-labelledby="editor-title" hidden>
+      <div class="editor-heading"><div><h2 id="editor-title">Settings</h2><p>Make Home yours.</p></div><button id="close-editor" class="nav icon-button" aria-label="Close Settings"></button></div>
+      <div class="settings-body">
+        <nav class="editor-tabs" role="tablist" aria-label="Settings categories" aria-orientation="vertical">
+          <button class="nav tab" id="apps-tab" role="tab" aria-controls="settings-panel" aria-selected="true"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>Apps</button>
+          <button class="nav tab" id="inputs-tab" role="tab" aria-controls="settings-panel" aria-selected="false"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v9l-4 4h-4l-4-4zM9 4V1h6v3M10 10h4M10 21v-4m4 0v4"/></svg></span>Inputs</button>
+          <button class="nav tab" id="appearance-tab" role="tab" aria-controls="settings-panel" aria-selected="false"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="4"/><path d="m3 17 6-6 5 5 3-3 5 5"/><circle cx="16" cy="8" r="2"/></svg></span>Background</button>
+          <button class="nav tab" id="scenery-tab" role="tab" aria-controls="settings-panel" aria-selected="false"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6h5"/></svg></span>Scenery</button>
+          <button class="nav tab" id="scenes-tab" role="tab" aria-controls="settings-panel" aria-selected="false"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7z"/></svg></span>Scene button</button>
+          <button class="nav tab" id="remote-tab" role="tab" aria-controls="settings-panel" aria-selected="false"><span class="category-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="1" width="12" height="22" rx="5"/><circle cx="12" cy="9" r="3"/><path d="M10 16h4m-4 3h4M12 4h.01"/></svg></span>Remote</button>
+        </nav>
+        <div id="settings-panel" role="tabpanel" aria-labelledby="apps-tab" class="settings-panel">
+          <div class="settings-panel-heading"><button id="settings-back" class="nav text-button" hidden>← Background</button><div class="settings-panel-title"><h3 id="settings-title">Apps</h3><span id="settings-summary"></span></div><p id="editor-description"></p></div>
+          <div id="choices" class="choices" role="group" aria-label="Choose favorites"></div>
+          <div id="settings-scroll-hint" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="editor-footer"><button id="restore-lg" class="nav text-button">Open LG Home</button><span>Changes save automatically</span><button id="done" class="nav primary">Done</button></div>
+    </section>
+    <section id="exit-dialog" role="dialog" aria-modal="true" aria-labelledby="exit-title" hidden>
+      <h2 id="exit-title">Return to LG Home?</h2>
+      <p>Your apps and preferences will be here when you come back.</p>
+      <div class="exit-actions"><button id="cancel-exit" class="nav secondary">Stay here</button><button id="confirm-exit" class="nav primary">LG Home</button></div>
+    </section>
+  </main>
+  <script src="catalog.js"></script>
+  <script src="defaults.js"></script>
+  <script src="glass.js"></script>
+  <script src="wallpapers.js"></script>
+  <script src="scene-config.js"></script>
+  <script src="scenes.js"></script>
+  <script src="lights-config.js"></script>
+  <script src="lights.js"></script>
+  <script src="controls-config.js"></script>
+  <script src="controls.js"></script>
+  <script src="scenery.js"></script>
+  <script src="settings-navigation.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>

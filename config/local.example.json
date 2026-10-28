@@ -1,0 +1,71 @@
+{
+  "homeAssistant": {
+    "origin": "http://homeassistant.local:8123",
+    "capability": "REPLACE_WITH_LOCALLY_GENERATED_CAPABILITY",
+    "lights": [
+      {
+        "id": "light.tv_light",
+        "name": "TV light",
+        "room": "Living room"
+      },
+      {
+        "id": "light.tv_backlight",
+        "name": "TV backlight",
+        "room": "Living room"
+      },
+      {
+        "id": "light.kitchen",
+        "name": "Kitchen light",
+        "room": "Kitchen"
+      },
+      {
+        "id": "switch.kitchen_sink",
+        "name": "Sink light",
+        "room": "Kitchen"
+      }
+    ],
+    "controls": [
+      {
+        "id": "fan.living_room_purifier",
+        "name": "Living room purifier",
+        "room": "Living room"
+      },
+      {
+        "id": "fan.bedroom_purifier",
+        "name": "Bedroom purifier",
+        "room": "Bedroom"
+      },
+      {
+        "id": "cover.bedroom_window",
+        "name": "Bedroom window",
+        "room": "Bedroom"
+      },
+      {
+        "id": "cover.office_window",
+        "name": "Office window",
+        "room": "Office"
+      },
+      {
+        "id": "media_player.soundbar",
+        "name": "Soundbar",
+        "room": "Living room"
+      }
+    ],
+    "scenes": [
+      {
+        "id": "scene.tv_time",
+        "title": "TV time",
+        "description": "TV light 20% \u00b7 Backlight 80% \u00b7 Kitchen and sink off",
+        "webhookId": "REPLACE_WITH_LOCALLY_GENERATED_WEBHOOK_ID"
+      }
+    ],
+    "tvTime": {
+      "tvLight": "light.tv_light",
+      "backlight": "light.tv_backlight",
+      "off": [
+        "light.kitchen",
+        "switch.kitchen_sink"
+      ]
+    }
+  }
+}

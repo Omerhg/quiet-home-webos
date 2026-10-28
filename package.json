@@ -1,0 +1,24 @@
+{
+  "name": "quiet-home-webos",
+  "version": "0.9.0",
+  "private": true,
+  "description": "A removable favorites and inputs launcher for webOS TV",
+  "scripts": {
+    "check": "node --check app/home.js && node --check app/wallpapers.js && node --check app/scenes.js && node --check app/glass.js && node --check app/lights.js && node --check app/scenery.js && node --check app/controls.js && node --check app/settings-navigation.js && node --check app/remote.js && node --check app/remote-policy.js",
+    "package": "node scripts/package.mjs",
+    "test": "playwright test",
+    "build": "node scripts/build.mjs",
+    "package:mute": "node scripts/package.mjs mute",
+    "preview": "node scripts/preview.mjs",
+    "test:policy": "node --test tests/remote-policy.test.cjs tests/native-home.test.mjs",
+    "test:ha": "python3 -I home-assistant/test_lights_policy.py && python3 -I home-assistant/test_controls_policy.py",
+    "scan": "python3 -I scripts/audit_public.py",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "@webos-tools/cli": "3.2.6"
+  },
+  "dependencies": {},
+  "license": "MIT"
+}

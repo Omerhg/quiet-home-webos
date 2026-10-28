@@ -1,0 +1,4 @@
+{
+  "defaultApps": {"categories": {"home": "com.quiet.home"}},
+  "idleApp": {"appId": "com.quiet.home"}
+}
