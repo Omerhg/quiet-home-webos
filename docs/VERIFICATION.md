@@ -12,10 +12,12 @@ The public version changes the app IDs to `com.quiet.home` / `com.quiet.mute`, r
 
 Checks cover:
 
-- 32 browser scenarios for the shared 0.9.0 UI, favorites, inputs, Settings, cursor/arrow navigation, scrolling, photos/Scenery, scenes, lights and the remote/control editors using isolated service fixtures.
+- 40 browser scenarios for the shared 0.10.0 UI, favorites, inputs, Settings, cursor/arrow navigation, scrolling, photos/Scenery, scenes, lights and the remote/control editors using isolated service fixtures.
 - 19 native Home / remote-policy checks, including probe-only behavior, exact intended profile scope, unrelated-file protection, mismatched-baseline refusal, rollback after failure, owned dangling-link restoration and single-button update scope.
 - 17 HA policy checks covering allowlists, service/action/type/bound restrictions, unsupported features, offline handling and switch-only behavior.
 - Private configuration generation, source/build separation, and bounded connector installation/refusal checks.
 - Syntax checks, webOS package creation, public-file auditing, known-private-value comparison and Gitleaks scanning of files/history before publication.
 
 These checks establish the local source's behavior and publication hygiene. The renamed public packages, generic installers and setup automation have not been installed on a second TV. Browser screenshots and mocked services do not prove another device's physical key routing, privileges, reboot behavior or recovery. Probe and test the actual recipient's device before relying on it.
+
+The 0.10.0 Back/menu and compact-control update was built while the original TV was off. Native key-code, named-key, key-release and browser-history Back routes, three-dot counting, repeat/reset behavior, still/dark wallpaper restoration and disclosure-only device browsing are checked in the browser. This update has not yet been installed or physically checked on that TV.

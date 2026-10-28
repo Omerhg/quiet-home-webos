@@ -26,7 +26,7 @@ CLI settings and private keys live outside this repository. Never commit them, a
 
 ```sh
 npm run package
-npx ares-install --device friend-tv dist/com.quiet.home_0.9.0_all.ipk
+npx ares-install --device friend-tv dist/com.quiet.home_0.10.0_all.ipk
 npx ares-launch --device friend-tv com.quiet.home
 ```
 
@@ -34,7 +34,7 @@ This installs a normal, separate developer app. It does not yet replace the Home
 
 Test arrows, OK, Back, cursor hover, Settings, favorites, HDMI inputs and the **LG Home** tile. Before applying the native default, confirm the physical Home key still reaches LG Home. Regional app IDs differ; remove unavailable tiles in Settings → Apps and edit `app/catalog.js` to add your own. Generic HDMI names are intentional; customize them locally.
 
-Settings → Background picks rotation/still/dark glass and selected photos. Settings → Scenery controls the 30-second idle view. Back from the photo gallery returns to Background before closing Settings. Left at the edge of content returns to the category sidebar. Changes save automatically.
+Settings → Background picks rotation/still/dark glass and selected photos. Settings → Scenery controls the 30-second idle view. Back goes up one level: gallery → Background content → category sidebar → Home. Three separate Back presses on Home enter photo mode; menu Back presses do not count. The small hollow dots fill as the sequence progresses and reset after a pause or another action. This is an in-app picture view, not a TV power-off command. Left at the edge of content returns to the category sidebar. Changes save automatically.
 
 ## Updating
 

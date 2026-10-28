@@ -64,3 +64,12 @@ test('app picker reads newly installed visible apps rather than being limited to
  await page.getByRole('button',{name:'Save assignment'}).click();await expect(page.locator('#remote-status')).toContainText('Netflix now opens New installed app');
  expect(await page.evaluate(()=>remoteState.settings.mapping_info[0].netflix.app_id)).toBe('com.friend.newapp');
 });
+
+test('Back cancels a pending remote choice, returns through button and category, then opens Settings without writes',async({page})=>{
+ await native(page);await page.goto('/remote.html?group=features');await expect(page.locator('#remote-button-title')).toHaveText('Guide');
+ await page.getByRole('button',{name:'Lights',exact:true}).click();await expect(page.getByRole('button',{name:'Save assignment'})).toBeEnabled();
+ await page.keyboard.press('Escape');await expect(page.locator('#remote-status')).toContainText('Unsaved selection cancelled');await expect(page.locator('#remote-keys button[aria-pressed=true]')).toBeFocused();expect(await writes(page)).toHaveLength(0);
+ await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Other buttons',exact:true})).toBeFocused();
+ expect(await page.evaluate(()=>remoteCalls.filter(c=>c.uri.endsWith('/launch')))).toHaveLength(0);
+ await page.keyboard.press('Escape');expect(await page.evaluate(()=>remoteCalls.filter(c=>c.uri.endsWith('/launch')).at(-1).p)).toEqual({id:'com.quiet.home',params:{settings:'remote'}});
+});

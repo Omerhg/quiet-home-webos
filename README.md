@@ -8,17 +8,17 @@ The launcher UI runs through LG's official Developer Mode: **no root is needed t
 
 A centered, nature-backed Home screen with glass-style app tiles, inputs, a large clock, remote shortcuts and optional Home Assistant controls.
 
-This is the shareable source of a personal customization developed on a **2026 LG G6, software 43.21.79, webOS 26 / internal SDK 11.2.0**. It includes the finished 0.9.0 UI and the bounded scripts used to make it the native default Home. It is a launcher, not a replacement operating system. Compatibility on a second TV is not established.
+This is the shareable source of a personal customization developed on a **2026 LG G6, software 43.21.79, webOS 26 / internal SDK 11.2.0**. It includes the finished 0.10.0 UI and the bounded scripts used to make it the native default Home. It is a launcher, not a replacement operating system. Compatibility on a second TV is not established.
 
 ## What is included
 
 - Favorite apps and HDMI inputs, with immediate remote navigation and cursor focus.
 - A six-category Settings sidebar and a three-column nature-photo picker.
 - Twelve credited 4K nature photographs, offline rotation and cached glass reflections.
-- Scenery mode after 30 seconds without activity; the first OK/pointer action returns Home safely.
+- Scenery mode after 30 seconds, or three Back presses from Home. Three small dots fill as you press; the first navigation/OK/pointer action returns Home safely.
 - A small LG Home tile to visit the original interface.
 - An editor for native app shortcuts, Guide, Home Hub and exposed custom-button actions, with explicit Save and Restore original.
-- An optional one-shot Mute helper, Home Assistant lighting/dimmers, purifier/shutter/audio controls and a TV time scene.
+- An optional one-shot Mute helper, a TV time scene, and compact Home Assistant device controls that expand for dimmers, presets, shutter position and volume.
 - Native-Home setup/probe/restore scripts, policy/browser tests and rollback instructions.
 
 ## Start here
@@ -49,6 +49,12 @@ All screenshots below come from the sanitized public app with original monogram 
 | Scenery mode | Remote button editor |
 | --- | --- |
 | ![Clock and nature background in Scenery mode](docs/images/scenery.png) | ![Guide button feature selection with explicit Save](docs/images/remote.png) |
+
+| Compact smart-home controls | Light adjustments |
+| --- | --- |
+| ![Compact smart-device overview](docs/images/controls.png) | ![Minimal lights with an expanded backlight](docs/images/lights.png) |
+
+Device rows reveal more options on demand: [expanded controls](docs/images/controls-expanded.png).
 
 Recreate these locally with `npm run screenshots` after installing Playwright Chromium. A demo scene appears in the screenshots; HA remains disabled in a fresh build.
 
@@ -98,7 +104,7 @@ npm run package:mute
 npm run scan
 ```
 
-If using an existing Chrome install, set `PLAYWRIGHT_CHROME_PATH` for the test run. Normal tests use Playwright's Chromium. Generated packages go to `dist/`. The first public source contains 32 browser checks, 19 native/remote policy checks and 17 HA policy checks; it also validates generated configuration and installer boundaries. See [VERIFICATION.md](docs/VERIFICATION.md) for the distinction between on-TV evidence and the public export.
+If using an existing Chrome install, set `PLAYWRIGHT_CHROME_PATH` for the test run. Normal tests use Playwright's Chromium. Generated packages go to `dist/`. The first public source contains 40 browser checks, 19 native/remote policy checks and 17 HA policy checks; it also validates generated configuration and installer boundaries. See [VERIFICATION.md](docs/VERIFICATION.md) for the distinction between on-TV evidence and the public export.
 
 The app ID in this public version is `com.quiet.home`, with helper `com.quiet.mute`. This differs from the original personal installation; all included scripts and profile data use the public IDs consistently. Do not mix packages and setup scripts from different copies.
 

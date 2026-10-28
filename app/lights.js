@@ -3,6 +3,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var endpoint = (window.QUIET_LIGHTS_CONFIG || {}).endpoint;
   var active = false, connected = false, reading = false, poll = null, readController = null;
+  var expandedId = null;
   var lights = [], refs = {}, drafts = {}, queued = {}, layoutChanged = function () {}, writes = Promise.resolve();
   function element(tag, className, text) {
     var node = document.createElement(tag); if (className) node.className = className;
@@ -42,7 +43,7 @@
       var pending = Object.keys(drafts).some(function (key) { return drafts[key].id === light.id; });
       ref.card.classList.toggle('light-offline', !light.available);
       ref.power.setAttribute('aria-checked', String(light.on));
-      ref.note.textContent = !light.available ? 'Unavailable' : pending ? 'Updating…' : light.on ? 'On' : 'Off';
+      ref.note.textContent = !light.available ? 'Unavailable' : pending ? 'Updating…' : light.on ? (light.dimmable && light.brightness != null ? light.brightness + '%' : 'On') : 'Off';
       ref.controls.forEach(function (control) { control.disabled = !usable; });
       ref.card.setAttribute('aria-busy', String(pending));
       ['brightness', 'kelvin'].forEach(function (action) {
@@ -99,6 +100,14 @@
     input.addEventListener('change', function () { flush(light.id + '/' + action); });
     ref.body.appendChild(input); ref[action] = input; ref[action + 'Output'] = output; ref.controls.push(input);
   }
+  function expand(id, restoreFocus) {
+    expandedId = id;
+    Object.keys(refs).forEach(function (key) {
+      var ref = refs[key], open = key === id; ref.body.hidden = !open; ref.card.classList.toggle('is-expanded', open);
+      if (ref.disclosure) ref.disclosure.setAttribute('aria-expanded', String(open));
+    }); layoutChanged();
+    if (restoreFocus && refs[restoreFocus] && refs[restoreFocus].disclosure) refs[restoreFocus].disclosure.focus({ preventScroll: true });
+  }
   function render() {
     $('lighting-rooms').replaceChildren(); refs = {};
     ['Living room', 'Kitchen'].forEach(function (room) {
@@ -112,18 +121,26 @@
         }); b.dataset.room = room; actions.appendChild(b);
       });
       heading.appendChild(actions); section.appendChild(heading);
-      lights.filter(function (light) { return light.room === room; }).forEach(function (light) {
-        var card = element('div', 'light-card'), body = element('div', 'light-card-controls'), title = element('div', 'light-card-heading');
-        card.dataset.light = light.id;
-        var copy = element('div'); copy.appendChild(element('h4', '', light.name)); var note = element('span', 'light-state'); copy.appendChild(note);
+      lights.filter(function (light) { return light.room === room; }).forEach(function (light, index) {
+        var card = element('div', 'light-card compact-device'), body = element('div', 'device-details'), title = element('div', 'light-card-heading');
+        card.dataset.light = light.id; body.hidden = true; body.id = 'light-details-' + room.replace(/ /g, '-') + '-' + index;
+        var hasDetails = light.dimmable || light.warmth || light.color;
+        var disclosure = element(hasDetails ? 'button' : 'div', hasDetails ? 'nav device-disclosure' : 'device-summary-static');
+        var glyph = element('span', 'device-glyph'); glyph.setAttribute('aria-hidden', 'true'); glyph.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 16c0-3-3-4-3-8a7 7 0 0 1 14 0c0 4-3 5-3 8M8 16h8M9 19h6M10 22h4"/></svg>';
+        var copy = element('span', 'device-copy'); copy.appendChild(element('span', 'device-name', light.name)); var note = element('span', 'light-state'); copy.appendChild(note); disclosure.append(glyph, copy);
+        if (hasDetails) {
+          disclosure.setAttribute('aria-label', light.name + ' details'); disclosure.setAttribute('aria-expanded', 'false'); disclosure.setAttribute('aria-controls', body.id);
+          var chevron = element('span', 'device-chevron'); chevron.setAttribute('aria-hidden', 'true'); disclosure.appendChild(chevron);
+          disclosure.addEventListener('click', function () { expand(expandedId === light.id ? null : light.id); });
+        }
         var power = button('', light.name + ' power', 'light-power', function () {
           var live = lights.filter(function (item) { return item.id === light.id; })[0];
           var pending = drafts[light.id + '/power']; queue(live, 'power', !(pending ? pending.value : live.on));
         });
         power.setAttribute('role', 'switch'); power.setAttribute('aria-checked', String(light.on));
         var thumb = element('span', 'light-toggle-thumb'); thumb.setAttribute('aria-hidden', 'true'); power.appendChild(thumb);
-        title.append(copy, power); body.appendChild(title); card.appendChild(body);
-        var ref = { card: card, body: body, power: power, note: note, controls: [power] }; refs[light.id] = ref;
+        title.append(disclosure, power); card.append(title, body);
+        var ref = { card: card, body: body, disclosure: hasDetails ? disclosure : null, power: power, note: note, controls: [power] }; refs[light.id] = ref;
         if (light.dimmable) range(light, ref, 'brightness', 'Brightness', 0, 100, 5, light.brightness || 50);
         if (light.warmth) range(light, ref, 'kelvin', 'White warmth', light.min_kelvin, light.max_kelvin, 100, light.kelvin || 2700);
         if (light.color) {
@@ -154,8 +171,9 @@
     }).finally(function () { reading = false; readController = null; $('lights-refresh').removeAttribute('aria-busy'); schedule(); });
   }
   window.QUIET_LIGHTS = {
-    open: function (onLayout) { active = true; connected = false; layoutChanged = onLayout; status('Connecting…'); if (lights.length) update({ lights: lights }); refresh(); },
-    close: function () { Object.keys(queued).forEach(flush); active = false; clearTimeout(poll); if (readController) readController.abort(); },
+    open: function (onLayout) { expand(null); active = true; connected = false; layoutChanged = onLayout; status('Connecting…'); if (lights.length) update({ lights: lights }); refresh(); },
+    close: function () { expand(null); Object.keys(queued).forEach(flush); active = false; clearTimeout(poll); if (readController) readController.abort(); },
+    back: function () { if (!expandedId) return false; var previous = expandedId; expand(null, previous); return true; },
     refresh: refresh,
     flush: function () { Object.keys(queued).forEach(flush); }
   };

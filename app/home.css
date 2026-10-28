@@ -216,3 +216,31 @@ h2 { font-size:18px;line-height:24px;font-weight:500;letter-spacing:.2px;margin:
 .scenery-mode .wallpaper-shade { background:linear-gradient(180deg,#06102126,transparent 60%,#02061170); }
 
 #controls-dialog button:disabled,#controls-dialog input:disabled { opacity:.38;cursor:default; }
+
+/* Compact device summaries; advanced controls appear only on request. */
+#controls-dialog { height:820px;width:1120px; }
+.control-devices { align-items:start;gap:15px; }
+.compact-device { padding:16px 18px;border-radius:22px; }
+.compact-device .light-card-heading { gap:14px;min-height:64px; }
+.device-disclosure,.device-summary-static { display:flex;align-items:center;gap:13px;flex:1;min-width:0;text-align:left;background:none;padding:4px 0;border-radius:13px;color:inherit; }
+.device-disclosure:focus { outline:2px solid #e8f3ffdc;outline-offset:5px; }
+.device-glyph { display:flex;align-items:center;justify-content:center;flex:none;width:35px;height:39px;color:#bfd7f0; }
+.device-glyph svg { width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; }
+.device-copy { min-width:0;flex:1; }
+.device-name { display:block;font-size:20px;line-height:27px;font-weight:500;letter-spacing:-.3px; }
+.device-copy .light-state { font-size:13px;line-height:20px;color:#a6bbd4;margin-top:4px; }
+.device-chevron { width:8px;height:8px;border-right:1.5px solid #c2d7ef;border-bottom:1.5px solid #c2d7ef;transform:rotate(45deg);flex:none;margin:0 5px;opacity:.65; }
+[aria-expanded="true"] .device-chevron { transform:rotate(225deg); }
+.compact-device.is-expanded { border-color:#bfdcff60;background:linear-gradient(145deg,#dcecff14,#d4e6ff06); }
+.device-details { border-top:1px solid #deedff16;padding-top:3px;margin-top:14px; }
+.device-quick { flex:none;min-width:63px;padding:0 12px;height:37px; }
+.device-quick[aria-pressed="true"] { background:#dcecff25;border-color:#dcecff80; }
+.control-devices .light-power { width:68px;height:38px; }
+.control-devices .light-toggle-thumb { width:28px;height:28px; }
+.control-devices .light-power[aria-checked="true"] .light-toggle-thumb { transform:translateX(30px); }
+#back-progress { position:absolute;left:50%;bottom:11px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;height:15px;z-index:15;pointer-events:none; }
+.back-dot { display:block;width:8px;height:8px;border:1px solid #eef5ff85;border-radius:50%;background:transparent;opacity:.5;transition:background .12s ease-out,opacity .12s ease-out; }
+.back-dot.filled { background:#eef5ff;opacity:.86;border-color:#f3f8ff; }
+.picture-mode #back-progress[data-count="0"] { visibility:hidden; }
+
+#controls-dialog,#lights-dialog { height:760px;width:1120px; }

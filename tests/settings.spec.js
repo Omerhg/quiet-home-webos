@@ -14,6 +14,7 @@ test('settings sidebar navigates predictably, keeps the pane in place and shows 
  expect(await page.locator('#choices').evaluate(e=>e.scrollTop)).toBe(before);
  await page.screenshot({path:'artifacts/settings-gallery-preview.png'});
  await page.keyboard.press('Escape');await expect(page.locator('#settings-title')).toHaveText('Background');await expect(page.locator('[data-choice=photos]')).toBeFocused();
+ await page.keyboard.press('Escape');await expect(page.getByRole('tab',{name:'Background',exact:true})).toBeFocused();
  await page.keyboard.press('Escape');await expect(page.locator('#editor')).toBeHidden();
 });
 test('all categories fit without scrolling the sidebar and selecting apps preserves content scroll',async({page})=>{

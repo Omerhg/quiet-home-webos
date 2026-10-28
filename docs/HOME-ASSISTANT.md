@@ -69,12 +69,12 @@ The webhook automation accepts local POST only and targets one explicit scene. `
 
 ```sh
 npm run package
-npx ares-install --device friend-tv dist/com.quiet.home_0.9.0_all.ipk
+npx ares-install --device friend-tv dist/com.quiet.home_0.10.0_all.ipk
 ```
 
 Only the ignored build/package contains your origin and capabilities. The tracked source remains connection-free. Never publish your personalized IPK or build output.
 
-Lights opens the living-room/kitchen popup; Controls opens purifiers, shutters and audio. Reads stop when the popup closes or the app is hidden. Slider requests coalesce; shutter Stop cancels a queued unsent position change. Settings → Scene button chooses which configured scene appears at Home; selecting it there does not activate it. Manual light adjustments do not edit the saved scene.
+Lights opens the living-room/kitchen popup; Controls opens purifiers, shutters and audio. Both start with compact summaries and quick power/mute/stop controls. Select a row to expand its advanced settings; only one item is expanded at a time. Back first collapses details and then closes the popup. Expanding or collapsing never sends device commands. Reads stop when the popup closes or the app is hidden. Slider requests coalesce; shutter Stop cancels a queued unsent position change. Settings → Scene button chooses which configured scene appears at Home; selecting it there does not activate it. Manual light adjustments do not edit the saved scene.
 
 ## Remove
 

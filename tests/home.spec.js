@@ -142,13 +142,13 @@ test('apps and inputs call only the requested launch endpoint', async ({ page })
 });
 
 
-test('Back offers LG Home and cancel restores focus without navigation', async ({ page }) => {
+test('three Back presses on Home show picture mode and do not open an exit dialog', async ({ page }) => {
   await page.goto('/');
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('dialog', { name: 'Return to LG Home?' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Stay here' })).toBeFocused();
-  await page.keyboard.press('Escape');
+  await page.keyboard.press('Escape'); await expect(page.locator('.back-dot.filled')).toHaveCount(1);
+  await page.keyboard.press('Escape'); await expect(page.locator('.back-dot.filled')).toHaveCount(2);
+  await page.keyboard.press('Escape'); await expect(page.locator('#screen')).toHaveClass(/scenery-mode/);
   await expect(page.locator('#exit-dialog')).toBeHidden();
+  await page.keyboard.press('Escape'); await expect(page.locator('#screen')).not.toHaveClass(/scenery-mode/);
   await expect(page.getByRole('button', { name: 'Jellyfin', exact: true })).toBeFocused();
 });
 
@@ -165,8 +165,7 @@ test('Open LG Home visits the stock app without changing the default or closing 
   await page.getByRole('button', { name: 'Open Settings' }).click();
   await page.locator('#restore-lg').click();
   await expect(page.locator('#editor')).toBeHidden();
-  await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'LG Home', exact: true }).click();
+  await page.locator('#lg-home-tile').click();
   await expect(page.locator('#exit-dialog')).toBeHidden();
   expect(await page.evaluate(() => window.launchCalls)).toEqual(Array(3).fill({
     uri: 'luna://com.webos.applicationManager/launch', payload: { id: 'com.webos.app.home', params: {} }

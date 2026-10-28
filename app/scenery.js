@@ -7,6 +7,8 @@
   function wake() {
     if (!sleeping) return;
     sleeping = false; screen.classList.remove('scenery-mode');
+    if (window.QUIET_WALLPAPERS.endAmbient) window.QUIET_WALLPAPERS.endAmbient();
+    document.dispatchEvent(new CustomEvent('quiet-scenery-change', { detail: { active: false } }));
     surfaces.forEach(function (node) { node.inert = false; });
     document.getElementById('scenery-overlay').hidden = true;
     if (previous && previous.isConnected) previous.focus({ preventScroll: true });
@@ -16,13 +18,15 @@
     if (!enabled || document.hidden || sleeping) return;
     timer = setTimeout(enter, 30000);
   }
-  function enter() {
+  function enter(options) {
       if (sleeping) return;
       if (document.hidden || document.querySelector('[role="dialog"]:not([hidden]), .reordering')) return;
+      if (options && options.picture && window.QUIET_WALLPAPERS.startAmbient) window.QUIET_WALLPAPERS.startAmbient();
       previous = document.activeElement; if (previous) previous.blur();
       surfaces.forEach(function (node) { node.inert = true; });
       document.getElementById('scenery-overlay').hidden = false;
       sleeping = true; screen.classList.add('scenery-mode');
+      document.dispatchEvent(new CustomEvent('quiet-scenery-change', { detail: { active: true } }));
 
   }
   function stop(event) { if (event.cancelable) event.preventDefault(); event.stopImmediatePropagation(); }
@@ -50,6 +54,7 @@
   window.QUIET_SCENERY = {
     wake: function () { wake(); schedule(); },
     enter: enter,
+    active: function () { return sleeping; },
     enabled: function () { return enabled; },
     toggle: function () { enabled = !enabled; try { localStorage.setItem('quiet-home.scenery.v1', enabled ? 'on' : 'off'); } catch (e) {} wake(); schedule(); }
   };

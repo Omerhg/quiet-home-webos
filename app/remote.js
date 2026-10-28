@@ -122,20 +122,34 @@
       busy = false; document.querySelectorAll('button').forEach(function (b) { b.disabled = false; }); if (selected) selectButton(selected); status(error.message,true);
     });
   }
-  function back() {
+  function returnToSettings() {
     if (busy) return;
     if (typeof PalmServiceBridge === 'undefined') { location.href = 'index.html?settings=remote'; return; }
     call('com.webos.applicationManager/launch',{id:'com.quiet.home',params:{settings:'remote'}}).catch(function () { status('Could not return to Settings.',true); });
   }
+  function handleBack() {
+    keyboardNavigation = true;
+    if (busy) { status('Finishing your assignment…'); return; }
+    var current = document.activeElement;
+    if (pending || current.closest('.remote-targets, .remote-target-tabs, .remote-save-actions')) {
+      var hadPending = !!pending; pending = null;
+      if (selected) { renderTargets(); $('remote-save').disabled = true; focus(document.querySelector('#remote-keys button[aria-pressed="true"]') || $('remote-' + group)); }
+      if (hadPending) status('Unsaved selection cancelled. Your button is unchanged.');
+      return;
+    }
+    if (current.closest('.remote-keys')) { focus($('remote-' + group)); return; }
+    returnToSettings();
+  }
+  window.QUIET_BACK.install(handleBack);
   ['apps','features','system'].forEach(function (name) { $('remote-' + name).addEventListener('click',function () { showGroup(name); }); });
   document.querySelectorAll('[data-type]').forEach(function (button) { button.addEventListener('click',function () { if (busy || !selected) return; type = button.dataset.type; renderTargets(); }); });
-  $('remote-close').addEventListener('click',back); $('remote-back').addEventListener('click',back); $('remote-save').addEventListener('click',function () { save(false); }); $('remote-restore').addEventListener('click',function () { save(true); }); $('remote-retry').addEventListener('click',refresh);
+  $('remote-close').addEventListener('click',returnToSettings); $('remote-back').addEventListener('click',returnToSettings); $('remote-save').addEventListener('click',function () { save(false); }); $('remote-restore').addEventListener('click',function () { save(true); }); $('remote-retry').addEventListener('click',refresh);
   function focus(button) { if (button) button.focus({preventScroll:true}); }
   function visibleButtons(root) { return Array.from(root.querySelectorAll('button')).filter(function (b) { return !b.disabled && !b.closest('[hidden]'); }); }
   document.addEventListener('keydown',function (event) {
     keyboardNavigation = true;
-    var code = event.keyCode, current = document.activeElement; if ([13,37,38,39,40,9,27,461,8].indexOf(code) < 0) return; event.preventDefault();
-    if (code === 27 || code === 461 || code === 8) { back(); return; } if (code === 13) return;
+    var code = event.keyCode, current = document.activeElement; if ([13,37,38,39,40,9].indexOf(code) < 0) return; event.preventDefault();
+    if (code === 13) return;
     var all = visibleButtons(document), index = all.indexOf(current);
     if (code === 9) { focus(all[(index + (event.shiftKey ? -1 : 1) + all.length) % all.length]); return; }
     var groupRoot = current.closest('.editor-tabs, .remote-keys, .remote-targets, .remote-target-tabs, .editor-footer');

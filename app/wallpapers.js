@@ -52,6 +52,7 @@
     }
 ];
   var selected = scenes.map(function (scene) { return scene.file; });
+  var ambient = false;
   var mode = 'rotate', index = 0, timer = null, cleanup = null, generation = 0;
   var host = document.getElementById('wallpapers'), screen = document.getElementById('screen');
   try {
@@ -76,17 +77,17 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify({ mode: mode, index: index, selected: selected })); } catch (e) { /* The current session still works. */ } }
   function schedule() {
     clearTimeout(timer);
-    if (mode === 'rotate' && selected.length > 1 && !document.hidden) timer = setTimeout(function () { show(nextIndex(index)); }, INTERVAL);
+    if ((mode === 'rotate' || (ambient && mode === 'glass')) && selected.length > 1 && !document.hidden) timer = setTimeout(function () { show(nextIndex(index)); }, INTERVAL);
   }
   function show(next, failures) {
-    if (mode === 'glass') return;
+    if (mode === 'glass' && !ambient) return;
     clearTimeout(timer);
     var ticket = ++generation, image = new Image();
     image.className = 'wallpaper'; image.alt = ''; image.decoding = 'async';
     image.onload = function () {
       var decoded = image.decode ? image.decode().catch(function () {}) : Promise.resolve();
       decoded.then(function () {
-        if (ticket !== generation || mode === 'glass') return;
+        if (ticket !== generation || (mode === 'glass' && !ambient)) return;
         clearTimeout(cleanup);
         // Keep the old scene fully visible underneath until the new one fades in.
         // Only two decoded photographs are retained, even after repeated changes.
@@ -119,6 +120,8 @@
     else show(index);
   }
   window.QUIET_WALLPAPERS = {
+    startAmbient: function () { ambient = true; if (host.children.length) schedule(); else show(index); },
+    endAmbient: function () { if (!ambient) return; ambient = false; if (mode === 'glass') setMode('glass'); else schedule(); },
     mode: function () { return mode; },
     current: function () { return scenes[index].title; },
     photos: function () { return scenes.map(function (scene) { return { file: scene.file, title: scene.title, selected: selected.indexOf(scene.file) !== -1 }; }); },

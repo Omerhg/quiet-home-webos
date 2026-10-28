@@ -37,10 +37,14 @@ test('Lights opens a separate live popup without changing lighting; Back restore
   await expect(popup).toBeVisible();
   await expect(page.locator('.light-card')).toHaveCount(4);
   await expect(page.getByRole('switch')).toHaveCount(4);
+  await expect(page.getByRole('slider', { name: 'TV light brightness', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'TV light details', exact: true }).click();
   await expect(page.getByRole('slider', { name: 'TV light brightness', exact: true })).toHaveValue('20');
+  await page.getByRole('button', { name: 'TV backlight details', exact: true }).click();
   await expect(page.getByRole('slider', { name: 'TV backlight brightness', exact: true })).toHaveValue('80');
   await expect(page.getByRole('switch', { name: 'Sink light power' })).toHaveAttribute('aria-checked', 'false');
   await expect(page.getByRole('slider', { name: /Sink/ })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Kitchen light details', exact: true }).click();
   await expect(page.getByRole('slider', { name: 'Kitchen light brightness', exact: true })).toHaveValue('0');
   for (let i = 0; i < 35; i++) {
     await page.keyboard.press('Tab');
@@ -48,6 +52,9 @@ test('Lights opens a separate live popup without changing lighting; Back restore
   }
   expect(calls).toHaveLength(0);
   await page.screenshot({ path: 'artifacts/lighting-popup-preview.png' });
+  await page.keyboard.press('Escape');
+  await expect(popup).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Kitchen light details', exact: true })).toHaveAttribute('aria-expanded', 'false');
   await page.keyboard.press('Escape');
   await expect(popup).toBeHidden();
   await expect(page.getByRole('button', { name: 'Open lights' })).toBeFocused();
@@ -59,6 +66,7 @@ test('Lights opens a separate live popup without changing lighting; Back restore
 test('arrows adjust brightness; room, sink, color and warmth controls target the correct lights', async ({ page }) => {
   const { calls } = await connection(page);
   await page.goto('/'); await page.getByRole('button', { name: 'Open lights' }).click();
+  await page.getByRole('button', { name: 'TV light details', exact: true }).click();
   const brightness = page.getByRole('slider', { name: 'TV light brightness', exact: true });
   await expect(brightness).toHaveValue('20');
   await brightness.focus(); await page.keyboard.press('ArrowRight');
@@ -71,6 +79,7 @@ test('arrows adjust brightness; room, sink, color and warmth controls target the
   await page.getByRole('button', { name: 'Kitchen all off' }).click();
   await expect.poll(() => calls.length).toBe(3);
   expect(calls[2]).toEqual({ ids: ['light.kitchen_kitchen', 'switch.kitchen_sink'], action: 'power', value: false });
+  await page.getByRole('button', { name: 'TV backlight details', exact: true }).click();
   await page.getByRole('button', { name: 'TV backlight Blue', exact: true }).click();
   await expect.poll(() => calls.length).toBe(4);
   expect(calls[3]).toEqual({ ids: ['light.living_room_tv_backlight'], action: 'color', value: [70, 130, 255] });

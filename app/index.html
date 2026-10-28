@@ -39,19 +39,20 @@
       </div>
     </footer>
     <div id="scenery-overlay" aria-label="Scenery mode" hidden><span>Move the pointer or press a button to return Home</span></div>
+    <div id="back-progress" role="status" aria-live="polite" aria-label="Press Back three times for picture mode"><span class="back-dot" aria-hidden="true"></span><span class="back-dot" aria-hidden="true"></span><span class="back-dot" aria-hidden="true"></span><span id="back-progress-label" class="visually-hidden"></span></div>
     <div id="toast" role="status" aria-live="polite"></div>
     <div id="backdrop" hidden></div>
     <section id="lights-dialog" role="dialog" aria-modal="true" aria-labelledby="lights-title" hidden>
-      <header class="lighting-heading"><div><h2 id="lights-title">Lights</h2><p>Set the mood.</p></div><div class="lighting-toolbar"><button id="lights-refresh" class="nav icon-button" aria-label="Refresh lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="lights-close" class="nav icon-button" aria-label="Close lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
+      <header class="lighting-heading"><div><h2 id="lights-title">Lights</h2><p>Select a light for dimming and color.</p></div><div class="lighting-toolbar"><button id="lights-refresh" class="nav icon-button" aria-label="Refresh lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="lights-close" class="nav icon-button" aria-label="Close lights"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
       <p id="lights-status" role="status" aria-live="polite">Connecting…</p>
       <div id="lighting-rooms" class="lighting-rooms"></div>
-      <footer class="lighting-footer"><span>Use arrows to move · Left / right adjusts a slider</span><button id="lights-done" class="nav primary">Done</button></footer>
+      <footer class="lighting-footer"><span>OK expands · Back goes up one level</span><button id="lights-done" class="nav primary">Done</button></footer>
     </section>
     <section id="controls-dialog" role="dialog" aria-modal="true" aria-labelledby="controls-title" hidden>
-      <header class="lighting-heading"><div><h2 id="controls-title">Home controls</h2><p>A little more comfort.</p></div><div class="lighting-toolbar"><button id="controls-refresh" class="nav icon-button" aria-label="Refresh Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="controls-close" class="nav icon-button" aria-label="Close Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
+      <header class="lighting-heading"><div><h2 id="controls-title">Home controls</h2><p>Select a device for more controls.</p></div><div class="lighting-toolbar"><button id="controls-refresh" class="nav icon-button" aria-label="Refresh Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button><button id="controls-close" class="nav icon-button" aria-label="Close Home controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div></header>
       <p id="controls-status" role="status" aria-live="polite">Connecting…</p>
       <div id="control-devices" class="control-devices"></div>
-      <footer class="lighting-footer"><span>Use arrows to move · Left / right adjusts a slider</span><button id="controls-done" class="nav primary">Done</button></footer>
+      <footer class="lighting-footer"><span>OK expands · Back goes up one level</span><button id="controls-done" class="nav primary">Done</button></footer>
     </section>
     <section id="editor" role="dialog" aria-modal="true" aria-labelledby="editor-title" hidden>
       <div class="editor-heading"><div><h2 id="editor-title">Settings</h2><p>Make Home yours.</p></div><button id="close-editor" class="nav icon-button" aria-label="Close Settings"></button></div>
@@ -90,6 +91,7 @@
   <script src="controls.js"></script>
   <script src="scenery.js"></script>
   <script src="settings-navigation.js"></script>
+  <script src="back.js"></script>
   <script src="home.js"></script>
 </body>
 </html>
