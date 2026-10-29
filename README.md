@@ -34,9 +34,11 @@ npm run preview
 Use Node.js 22+ and Python 3. Preview opens at `http://127.0.0.1:8765`; stop it with Ctrl+C. No account or Home Assistant connection is required. App tiles use original monograms in this public version rather than redistributed proprietary app artwork.
 
 1. Follow [INSTALL.md](docs/INSTALL.md) to enable Developer Mode, build and test the launcher as an ordinary app.
-2. If the model/firmware and stock baseline match, follow [NATIVE-HOME.md](docs/NATIVE-HOME.md) to probe and apply the default-Home change. Developer Mode alone does **not** grant this protected access.
+2. Run `npm run inspect:tv -- --device friend-tv` for a read-only SDK check. If considering native default Home, review [NATIVE-HOME.md](docs/NATIVE-HOME.md) and its protected baseline checks. Developer Mode alone does **not** grant this access. Even the native `probe` uses temporary administrator execution.
 3. Set up optional [remote shortcuts](docs/REMOTE.md) and [Home Assistant](docs/HOME-ASSISTANT.md).
 4. Keep [ROLLBACK.md](docs/ROLLBACK.md) handy. LG Home is retained, and the native Home override is a single owned profile link.
+
+**Another TV, or an assistant refusing the native step?** Read [compatibility troubleshooting](docs/COMPATIBILITY.md). CS5 software 43.21.77 is not rejected just for differing from 43.21.79: the native gate checks SDK 11.2.0 and Home profiles. A matching SDK still does not establish compatibility; the ordinary app and LG Quick Access are separate options.
 
 ## A look inside
 

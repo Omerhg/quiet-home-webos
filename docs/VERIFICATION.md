@@ -13,7 +13,7 @@ The public version changes the app IDs to `com.quiet.home` / `com.quiet.mute`, r
 Checks cover:
 
 - 40 browser scenarios for the shared 0.10.0 UI, favorites, inputs, Settings, cursor/arrow navigation, scrolling, photos/Scenery, scenes, lights and the remote/control editors using isolated service fixtures.
-- 19 native Home / remote-policy checks, including probe-only behavior, exact intended profile scope, unrelated-file protection, mismatched-baseline refusal, rollback after failure, owned dangling-link restoration and single-button update scope.
+- Native Home / remote-policy checks cover probe-only behavior, exact intended profile scope, unrelated-file protection, mismatched-baseline refusal, rollback after failure, owned dangling-link restoration and single-button update scope. Additional compatibility checks use synthetic CS5/43.21.77 data to verify read-only inspection, SDK classification, metadata filtering and separation from privileged setup. They do not establish on-TV CS5 compatibility.
 - 17 HA policy checks covering allowlists, service/action/type/bound restrictions, unsupported features, offline handling and switch-only behavior.
 - Private configuration generation, source/build separation, and bounded connector installation/refusal checks.
 - Syntax checks, webOS package creation, public-file auditing, known-private-value comparison and Gitleaks scanning of files/history before publication.

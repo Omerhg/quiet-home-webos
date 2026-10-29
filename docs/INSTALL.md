@@ -20,6 +20,14 @@ npx ares-novacom --device friend-tv --getkey
 npx ares-device --device friend-tv --system-info
 ```
 
+For a filtered compatibility report that does not run any privileged setup:
+
+```sh
+npm run inspect:tv -- --device friend-tv
+```
+
+Another model or software version is not automatically rejected: the optional native setup checks SDK 11.2.0 and protected profile baselines. See [COMPATIBILITY.md](COMPATIBILITY.md) for CS5/43.21.77, interpretation of the report, and a built-in Quick Access alternative. Ordinary installation is separate from that native SDK gate.
+
 CLI settings and private keys live outside this repository. Never commit them, a passphrase, a renewal token, or screenshots of those values.
 
 ## Build and install
