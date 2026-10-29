@@ -2,6 +2,8 @@
 
 This reproduces a protected, firmware-specific operation performed on an owned 2026 G6, software 43.21.79 / SDK 11.2.0. The normal `prisoner` SSH account cannot perform it. Firmware downloaded during the original research was inspected locally and never flashed; no firmware download is needed here.
 
+For a different model or SDK, see [the agent porting guide](PORTING-FOR-AGENTS.md) before modifying the trusted-app route or profile checks. It explains how to investigate and validate a bounded adaptation while retaining restoration.
+
 ## What changes
 
 The app manifest registers the `home` category. Its bundled `home-profile.json` contains only:
@@ -29,6 +31,16 @@ The reviewed voiceweb → jsserver path uses a trusted local page and a staged o
 The helper calls that path only for its own probe/apply/restore operation. It does not invoke an upstream root-persistence installer, install Homebrew Channel, open a root SSH/Telnet listener, replace firmware, modify LG Home binaries or add a boot-time watcher. A restart clears the temporary execution context; it does not patch the underlying firmware vulnerability or erase logs.
 
 ## Probe first
+
+Start with the **ordinary read-only inspection**, especially on a different model or software version:
+
+```sh
+node scripts/native-home.mjs --device friend-tv --mode inspect
+```
+
+This uses only Developer Mode's system-information read. The existing native gate is SDK 11.2.0 plus protected baseline checks; it is not a G6/43.21.79 model/firmware allowlist. A CS5 on 43.21.77 needs its own SDK and baseline reviewed, not an assumed rejection or an assumed match. See [compatibility troubleshooting](COMPATIBILITY.md).
+
+**The following `probe` is different: it invokes the firmware vulnerability and runs with temporary administrator privileges.** It does not apply the profile link, but it is not an unprivileged diagnostic.
 
 Review `scripts/native-home.mjs` and `setup/payload.js`. Ensure the matching public app is already installed. Replace `YOUR_COMPUTER_LAN_IP` with the setup computer's private IPv4 address, not the TV's address:
 

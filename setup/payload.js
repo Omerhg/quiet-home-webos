@@ -47,7 +47,7 @@ module.exports.run = function () {
     if (['probe','apply','restore'].indexOf(mode) < 0) throw new Error('Unknown operation.');
     if (result.uid !== 0 || result.euid !== 0) throw new Error('Temporary administrator access was not obtained.');
     result.sdk = call('com.webos.service.tv.systemproperty/getSystemInfo', {keys:['sdkVersion']});
-    if (result.sdk.sdkVersion !== '11.2.0') throw new Error('This export is limited to the tested internal SDK 11.2.0.');
+    if (result.sdk.sdkVersion !== '11.2.0') throw new Error('Unsupported internal SDK: ' + result.sdk.sdkVersion + '. This export requires SDK 11.2.0, not a specific model name or software number. Run the ordinary read-only inspect command; do not remove this check.');
     var before = {profiles:profiles(),setting:setting()};
     result.before = before;
     if (mode === 'probe' || mode === 'apply') {

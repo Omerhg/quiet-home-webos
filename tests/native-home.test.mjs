@@ -43,7 +43,7 @@ test('probe reads without adding an override',()=>{const r=run('probe');assert.e
 test('apply changes only the intended native destinations and preserves AOD/settings',()=>{const r=run('apply');assert.equal(r.result.status,'applied');assert.equal(r.files.get(TARGET).target,SRC);assert.equal(r.result.after.profiles.defaultApps.categories.aod,r.original.defaultApps.categories.aod);assert.deepEqual(r.result.after.setting,r.setting);});
 test('an explicit Home setting blocks apply',()=>{const r=run('apply',{explicitHome:true});assert.equal(r.result.status,'error');assert(!r.files.has(TARGET));});
 test('ordinary UID cannot apply',()=>{const r=run('apply',{uid:6631});assert.equal(r.result.status,'error');assert.equal(r.calls.length,0);assert(!r.files.has(TARGET));});
-test('a different SDK cannot apply',()=>{const r=run('apply',{sdk:'10.3.1'});assert.equal(r.result.status,'error');assert(!r.files.has(TARGET));});
+test('a different SDK cannot apply and reports the actual SDK',()=>{const r=run('apply',{sdk:'10.3.1'});assert.equal(r.result.status,'error');assert.match(r.result.error,/Unsupported internal SDK: 10\.3\.1/);assert(!r.files.has(TARGET));});
 test('existing unrelated override is never overwritten',()=>{const r=run('apply',{override:'/someone-else/profile.json'});assert.equal(r.result.status,'error');assert.equal(r.files.get(TARGET).target,'/someone-else/profile.json');});
 test('unexpected profile directory permissions block apply',()=>{const r=run('apply',{unsafeDirectory:true});assert.equal(r.result.status,'error');assert(!r.files.has(TARGET));});
 test('malformed bundled data blocks apply',()=>{const r=run('apply',{badBundle:true});assert.equal(r.result.status,'error');assert(!r.files.has(TARGET));});

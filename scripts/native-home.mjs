@@ -6,11 +6,19 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import http from 'node:http';
 import crypto from 'node:crypto';
+import {inspectMain} from './inspect-tv.mjs';
+
+async function main() {
 const execute=promisify(execFile),root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const args=process.argv.slice(2);
 function option(name){const i=args.indexOf(name);return i>=0?args[i+1]:undefined;}
 const device=option('--device'),ip=option('--pc-ip'),mode=option('--mode');
-if(!device||!ip||!['probe','apply','restore'].includes(mode))throw Error('Usage: node scripts/native-home.mjs --device friend-tv --pc-ip YOUR_LAN_IP --mode probe|apply|restore');
+if(mode==='inspect') {
+  if(args.length!==4||!device||args.some((arg,i)=>i%2===0&&!['--device','--mode'].includes(arg)))throw Error('Usage: node scripts/native-home.mjs --device friend-tv --mode inspect');
+  await inspectMain(['--device',device]);
+  return;
+}
+if(!device||!ip||!['probe','apply','restore'].includes(mode))throw Error('Use --device friend-tv --mode inspect for a read-only check, or --device friend-tv --pc-ip YOUR_LAN_IP --mode probe|apply|restore for temporary privileged setup.');
 if(!/^[A-Za-z][A-Za-z0-9._-]*$/.test(device))throw Error('Use a simple CLI device alias.');
 const octets=ip.split('.').map(Number);
 if(octets.length!==4||octets.some(n=>!Number.isInteger(n)||n<0||n>255)||!(octets[0]===10||(octets[0]===192&&octets[1]===168)||(octets[0]===172&&octets[1]>=16&&octets[1]<=31)))throw Error('Use this computer\'s private LAN IPv4 address.');
@@ -33,7 +41,7 @@ try{
   }
   const operation=Buffer.from(JSON.stringify({mode})).toString('base64');
   await remote("printf '%s' "+quote(operation)+' | base64 -d > '+quote(stage+'/operation.json'));
-  console.log('Starting one-shot '+mode+' on device alias '+device+'.');
+  console.log('Starting temporary administrator execution for '+mode+' on device alias '+device+'. Even probe uses the firmware vulnerability; inspect does not.');
   await cli('ares-launch',['--device',device,'com.webos.app.voiceweb','--params',JSON.stringify({URL:'http://'+ip+':'+port+'/index.html',source:'quiet-home-share'})]);
   let result,lastError;
   const deadline=Date.now()+90000;
@@ -54,3 +62,6 @@ try{
   if(staged&&finished){try{await remote('rm -r '+quote(stage));}catch{console.log('Temporary setup directory retained for manual cleanup: '+stage);}}
   else if(staged)console.log('Setup files retained for diagnosis: '+stage+'. Do not delete them until the outcome is understood.');
 }
+}
+
+await main();
