@@ -40,6 +40,8 @@ Use Node.js 22+ and Python 3. Preview opens at `http://127.0.0.1:8765`; stop it 
 
 **Another TV, or an assistant refusing the native step?** Read [compatibility troubleshooting](docs/COMPATIBILITY.md). CS5 software 43.21.77 is not rejected just for differing from 43.21.79: the native gate checks SDK 11.2.0 and Home profiles. A matching SDK still does not establish compatibility; the ordinary app and LG Quick Access are separate options.
 
+**Adapting it with an AI agent?** Give it [the porting instructions](docs/PORTING-FOR-AGENTS.md): identify the device, research the appropriate one-shot route, add explicit version/profile validation, test and preserve rollback. The guide includes an owner prompt and evidence requirements for a new model.
+
 ## A look inside
 
 All screenshots below come from the sanitized public app with original monogram tiles and synthetic demo settings. They contain no live device or account data.

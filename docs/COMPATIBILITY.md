@@ -44,6 +44,8 @@ These are LG's [Quick Access instructions](https://www.lg.com/us/simroom/tvs/use
 
 ## Ask for a model-specific review
 
+For an AI agent investigating other models or SDK versions, use [PORTING-FOR-AGENTS.md](PORTING-FOR-AGENTS.md). It includes a copyable owner prompt, the implementation points that may need adapting, primary-source research guidance, adapter validation, tests and rollback requirements. It is a porting workflow, not a claim that every firmware is vulnerable or supported.
+
 Share only the filtered model, software and SDK values, and the actual operation/result or error. A privileged report can also contain settings and local paths; review and redact it before sharing. Do not share pairing passphrases, keys, account tokens, device addresses or private HA configuration.
 
 A useful request to a maintainer is:

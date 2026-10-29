@@ -7,3 +7,5 @@ The maintainer must approve changes before they are merged. Direct pushes to thi
 Keep personalized configuration and packages outside Git. Run the checks in the README and inspect the staged diff. Do not include account tokens, live capability/webhook URLs, pairing keys, developer passphrases, device reports, firmware images or private browser links. Follow [SECURITY.md](SECURITY.md) for sensitive reports.
 
 The public app IDs and one-shot native Home setup must stay consistent. Changes to privileged setup, rollback, remote restoration or capability boundaries need tests that verify both the intended change and preservation of unrelated state. Report on-device evidence separately from browser/service simulations.
+
+For a new model or firmware baseline, follow [PORTING-FOR-AGENTS.md](docs/PORTING-FOR-AGENTS.md). Include exact version evidence, the selected trusted-app/service route, profile assumptions, synthetic failure/rollback tests and the limits of physical verification. A candidate port must not silently bypass the current unknown-version checks.

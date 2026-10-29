@@ -2,6 +2,8 @@
 
 This reproduces a protected, firmware-specific operation performed on an owned 2026 G6, software 43.21.79 / SDK 11.2.0. The normal `prisoner` SSH account cannot perform it. Firmware downloaded during the original research was inspected locally and never flashed; no firmware download is needed here.
 
+For a different model or SDK, see [the agent porting guide](PORTING-FOR-AGENTS.md) before modifying the trusted-app route or profile checks. It explains how to investigate and validate a bounded adaptation while retaining restoration.
+
 ## What changes
 
 The app manifest registers the `home` category. Its bundled `home-profile.json` contains only:

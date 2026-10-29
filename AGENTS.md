@@ -15,3 +15,7 @@ Never commit `.local/`, `.build/`, `dist/`, personal packages, credentials, real
 Run checks appropriate to a change. The key suites are `npm run check`, `npm run test:policy`, `npm run test:ha`, `python3 -I tests/test_setup_tools.py` and `npm test`. Test code must use synthetic fixtures; it must never invoke live TV/HA actions. Do not modify a TV or HA instance simply to improve this public source unless its owner separately requests it.
 
 Document firmware-specific limits honestly. The ordinary launcher needs no root or firmware changes; native default-Home setup uses a bounded one-time privileged operation and leaves no persistent root service. Do not relabel that operation as having needed no privilege.
+
+## Other models and SDK versions
+
+When asked to adapt native Home to a different TV, read [the agent porting guide](docs/PORTING-FOR-AGENTS.md). Start with ordinary inspection, distinguish transport/privilege/profile failures, and investigate primary-source evidence for the target before proposing an adapter. The current SDK gate is not a model/firmware allowlist; a difference is neither automatic compatibility nor proof of impossibility. Adapt checks explicitly with synthetic tests and a matching rollback path rather than deleting guards. A research request does not authorize experiments on an unrelated TV or publication.
