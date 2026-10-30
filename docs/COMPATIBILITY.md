@@ -8,6 +8,8 @@ The native payload does **not** compare a model name or software number. It chec
 
 LG documents `modelName`, `firmwareVersion` and `sdkVersion` as separate [system-information fields](https://webostv.developer.lge.com/develop/references/tv-device-information). Read the SDK rather than inferring it from a firmware number or marketing name.
 
+The [2026-10-30 CS5 research](research/cs5-build-3706.md) now compares actual extracted global firmware for builds 3706 and 3711 with the known-working G6 reference. Six files match for 3706; 3711 adds final-path checks and has no voiceweb directory in its base root filesystem. These are offline findings, not on-TV privilege verification. The [loader collector](LOADER-FACTS.md) can read installed fingerprints using the ordinary developer account without trying the privilege route.
+
 ## Read-only check first
 
 Pair Developer Mode following [INSTALL.md](INSTALL.md), then run:

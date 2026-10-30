@@ -42,6 +42,8 @@ Use Node.js 22+ and Python 3. Preview opens at `http://127.0.0.1:8765`; stop it 
 
 **Adapting it with an AI agent?** Give it [the porting instructions](docs/PORTING-FOR-AGENTS.md): identify the device, research the appropriate one-shot route, add explicit version/profile validation, test and preserve rollback. The guide includes an owner prompt and evidence requirements for a new model.
 
+**Israeli CS5 on build 11.2.0-3706:** [read the local firmware research](docs/research/cs5-build-3706.md). Six relevant files match the known-working G6 reference, making the existing one-shot route a candidate; this is not yet a verified CS5 root result. Build 3711 has materially different checks. Use `npm run inspect:loader -- --device friend-tv` for an ordinary read-only fingerprint report before considering a privileged probe; see [collector instructions](docs/LOADER-FACTS.md).
+
 ## A look inside
 
 All screenshots below come from the sanitized public app with original monogram tiles and synthetic demo settings. They contain no live device or account data.

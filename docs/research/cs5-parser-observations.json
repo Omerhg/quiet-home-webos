@@ -1,0 +1,140 @@
+{
+  "scope": "offline firmware parser simulation; not root or TV validation",
+  "results": [
+    {
+      "label": "G6 43.21.79 / SDK 11.2.0-3512 (comparison, not CS5)",
+      "requestedPath": "/media/developer/temp/quiet-research-demo",
+      "status": "parser-reached-load-callback",
+      "error": null,
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        },
+        {
+          "operation": "virtual-chdir",
+          "path": "/media/developer/temp/quiet-research-demo"
+        }
+      ],
+      "moduleLoads": [
+        {
+          "path": "/media/developer/temp/quiet-research-demo",
+          "id": "research.fixture.only"
+        }
+      ],
+      "privilegeVerified": false
+    },
+    {
+      "label": "G6 43.21.79 / SDK 11.2.0-3512 (comparison, not CS5)",
+      "requestedPath": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+      "status": "parser-reached-load-callback",
+      "error": null,
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        },
+        {
+          "operation": "virtual-chdir",
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway"
+        }
+      ],
+      "moduleLoads": [
+        {
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+          "id": "research.fixture.only"
+        }
+      ],
+      "privilegeVerified": false
+    },
+    {
+      "label": "CS5 43.21.96 / SDK 11.2.0-3711",
+      "requestedPath": "/media/developer/temp/quiet-research-demo",
+      "status": "rejected-before-load",
+      "error": "Rejected to chdir as the service path is not in trusted file path: /media/developer/temp/quiet-research-demo",
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        }
+      ],
+      "moduleLoads": [],
+      "privilegeVerified": false
+    },
+    {
+      "label": "CS5 43.21.96 / SDK 11.2.0-3711",
+      "requestedPath": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+      "status": "parser-reached-load-callback",
+      "error": null,
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        },
+        {
+          "operation": "virtual-chdir",
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway"
+        }
+      ],
+      "moduleLoads": [
+        {
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+          "id": "research.fixture.only"
+        }
+      ],
+      "privilegeVerified": false
+    },
+    {
+      "label": "CS5/C5 global 43.21.77 / SDK 11.2.0-3706 (matches photographed build)",
+      "requestedPath": "/media/developer/temp/quiet-research-demo",
+      "status": "parser-reached-load-callback",
+      "error": null,
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        },
+        {
+          "operation": "virtual-chdir",
+          "path": "/media/developer/temp/quiet-research-demo"
+        }
+      ],
+      "moduleLoads": [
+        {
+          "path": "/media/developer/temp/quiet-research-demo",
+          "id": "research.fixture.only"
+        }
+      ],
+      "privilegeVerified": false
+    },
+    {
+      "label": "CS5/C5 global 43.21.77 / SDK 11.2.0-3706 (matches photographed build)",
+      "requestedPath": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+      "status": "parser-reached-load-callback",
+      "error": null,
+      "changes": [
+        {
+          "operation": "virtual-write",
+          "path": "/media/developer/temp/quiet-research-demo/cgroup",
+          "bytes": 6
+        },
+        {
+          "operation": "virtual-chdir",
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway"
+        }
+      ],
+      "moduleLoads": [
+        {
+          "path": "/usr/palm/services/com.webos.service.secondscreen.gateway",
+          "id": "research.fixture.only"
+        }
+      ],
+      "privilegeVerified": false
+    }
+  ]
+}

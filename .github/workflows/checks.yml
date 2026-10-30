@@ -19,6 +19,7 @@ jobs:
       - run: npm run test:policy
       - run: npm run test:ha
       - run: python3 -I tests/test_setup_tools.py
+      - run: npm run test:research
       - run: npm run scan
       - run: npx playwright install --with-deps chromium
       - run: npm test
