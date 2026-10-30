@@ -1,0 +1,38 @@
+[
+  {
+    "path": "usr/palm/nodejs/unified_service_server.js",
+    "sha256_3706": "46216ccc3e2f775308d68f93d6ea647b43f53481a40d9b1ba6ea9e1f3bffcac2",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": true
+  },
+  {
+    "path": "usr/palm/services/jsservicelauncher/bootstrap.js",
+    "sha256_3706": "777a595a373c596092a5334a4c1412f19407ef9a16a0dcf679a5b54148b6602f",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": true
+  },
+  {
+    "path": "usr/palm/applications/com.webos.app.voiceweb/appinfo.json",
+    "sha256_3706": "3b9846d079ca99d3163188bb3838e7ade71dffdda1f377280764b0f73477d248",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": false
+  },
+  {
+    "path": "usr/palm/applications/com.webos.app.voiceweb/index.html",
+    "sha256_3706": "095eb616b97e35d9f7a172c1ca272006094301e39b21b20c28bb67036248773c",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": false
+  },
+  {
+    "path": "usr/bin/run-js-service",
+    "sha256_3706": "28fe2ed13075abf30b3103b12d1ab83d663874e9523d35c5a9089bd75ac9a8b3",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": true
+  },
+  {
+    "path": "usr/bin/run-unified-service-server",
+    "sha256_3706": "39a93e4f6de2eb167b5643486b37f02a177c657d658f60cf82664e95d82eeaf0",
+    "identical_to_working_g6_43_21_79": true,
+    "present_in_cs5_3711": true
+  }
+]

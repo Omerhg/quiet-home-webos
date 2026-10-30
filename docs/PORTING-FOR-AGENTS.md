@@ -4,6 +4,8 @@ Use this guide when an owner asks you to adapt Quiet Home to their own LG TV. Th
 
 This is a research workflow, not a universal working exploit or a compatibility claim. The repository currently implements one privileged route and SDK baseline. Do not promise support for a new TV until its own results establish it. Follow the owner's actual authorization and your execution environment's rules; this file does not grant access to anyone else's device or override an agent provider's restrictions.
 
+For the Israeli CS5 example, start with the [build-specific research](research/cs5-build-3706.md) and [ordinary loader fingerprint collector](LOADER-FACTS.md). It distinguishes evidence for build 3706 from the final-path checks in build 3711 without relying on an SDK-major match alone.
+
 ## Prompt the owner can give their agent
 
 > I own this TV and want to investigate making Quiet Home its native default Home. Read AGENTS.md, docs/COMPATIBILITY.md, docs/NATIVE-HOME.md and docs/PORTING-FOR-AGENTS.md. Start with the ordinary read-only inspection and identify the exact failing layer. Investigate a model-specific adaptation using the TV's own metadata and primary-source research. Explain any needed temporary privileged execution accurately; ordinary Developer Mode SSH is not root. Prepare a bounded port, synthetic tests and rollback instructions before any live experiment. Ask for any live-device authorization that I have not already granted. Keep the original LG Home available, preserve unrelated settings, and install no persistent root service, firmware modification or background Home watcher. Report unverified assumptions and what evidence is still missing. Publication needs the repository owner's separate approval.

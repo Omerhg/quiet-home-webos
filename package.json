@@ -4,7 +4,7 @@
   "private": true,
   "description": "A removable favorites and inputs launcher for webOS TV",
   "scripts": {
-    "check": "node --check app/home.js && node --check app/wallpapers.js && node --check app/scenes.js && node --check app/glass.js && node --check app/lights.js && node --check app/scenery.js && node --check app/controls.js && node --check app/settings-navigation.js && node --check app/remote.js && node --check app/remote-policy.js && node --check app/back.js && node --check scripts/native-home.mjs && node --check scripts/inspect-tv.mjs && node --check scripts/lib/tv-compatibility.mjs && node --check setup/payload.js",
+    "check": "node --check app/home.js && node --check app/wallpapers.js && node --check app/scenes.js && node --check app/glass.js && node --check app/lights.js && node --check app/scenery.js && node --check app/controls.js && node --check app/settings-navigation.js && node --check app/remote.js && node --check app/remote-policy.js && node --check app/back.js && node --check scripts/native-home.mjs && node --check scripts/inspect-tv.mjs && node --check scripts/lib/tv-compatibility.mjs && node --check scripts/research/offline-loader-check.mjs && node --check setup/payload.js",
     "package": "node scripts/package.mjs",
     "test": "playwright test",
     "build": "node scripts/build.mjs",
@@ -12,6 +12,8 @@
     "preview": "node scripts/preview.mjs",
     "test:policy": "node --test tests/remote-policy.test.cjs tests/native-home.test.mjs tests/tv-compatibility.test.mjs",
     "inspect:tv": "node scripts/inspect-tv.mjs",
+    "inspect:loader": "python3 -I scripts/collect_loader_facts.py",
+    "test:research": "python3 -I tests/test_loader_facts.py",
     "test:ha": "python3 -I home-assistant/test_lights_policy.py && python3 -I home-assistant/test_controls_policy.py",
     "scan": "python3 -I scripts/audit_public.py",
     "screenshots": "node scripts/screenshots.mjs"
